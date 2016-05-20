@@ -73,11 +73,12 @@ Route::get(
             }
             $rutaBD = substr($ruta, 6);
             //si tiene accesoo si accede al inicio o a misdatos
-            if (in_array($rutaBD, $accesos) or
+            return View::make($ruta)->with($valores);
+            /*if (in_array($rutaBD, $accesos) or
                 $rutaBD == 'inicio' or $rutaBD=='mantenimiento.misdatos') {
                 return View::make($ruta)->with($valores);
             } else
-                return Redirect::to('/admin.inicio');
+                return Redirect::to('/admin.inicio');*/
         } else
             return Redirect::to('/');
         }
