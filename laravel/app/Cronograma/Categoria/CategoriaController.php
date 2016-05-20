@@ -20,4 +20,16 @@ class CategoriaController extends \BaseController {
         }
     }
 
+    /**
+     * listar categorias para select
+     * POST /categoria/listar
+     */
+    public function postListar()
+    {
+        if ( Request::ajax() ) {
+            $areas = Categoria::get(Input::all());
+            return Response::json(array('rst'=>1,'datos'=>$areas));
+        }
+    }
+
 }

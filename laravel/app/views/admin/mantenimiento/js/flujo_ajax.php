@@ -85,6 +85,29 @@ var Flujos={
             }
         });
     },
+    ListarCategorias:function(categoria){
+        $.ajax({
+            url         : 'categoria/cargar',
+            type        : 'POST',
+            cache       : false,
+            dataType    : 'json',
+            data        : {estado:1},
+            beforeSend : function() {
+                
+            },
+            success : function(obj) {
+                var html="<option value=''> Seleccione </option>";
+                if(obj.rst==1){
+                    $.each(obj.datos,function(index,data){
+                        html+='<option value="'+data.id+'">'+data.nombre+'</option>';
+                    });
+                }
+                 $("#"+categoria).html(html); 
+            },
+            error: function(){
+            }
+        });
+    },
     CambiarEstadoFlujos:function(id,AD){
         $("#form_flujos").append("<input type='hidden' value='"+id+"' name='id'>");
         $("#form_flujos").append("<input type='hidden' value='"+AD+"' name='estado'>");
