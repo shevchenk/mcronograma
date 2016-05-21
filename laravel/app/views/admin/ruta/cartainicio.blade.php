@@ -8,6 +8,7 @@
     {{ HTML::script('lib/bootstrap-multiselect/dist/js/bootstrap-multiselect.js') }}
     {{ HTML::script('//cdn.jsdelivr.net/momentjs/2.9.0/moment.min.js') }}
     {{ HTML::script('lib/daterangepicker/js/daterangepicker_single.js') }}
+    {{ HTML::script('https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.24/vue.min.js') }}
     @include( 'admin.js.slct_global_ajax' )
     @include( 'admin.js.slct_global' )
 
@@ -66,6 +67,11 @@
                                 <i class="fa fa-save fa-lg"></i>&nbsp;Nuevo
                             </a>
                         </div>
+
+                        <div class="col-sm-12">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Modal</button>
+                        </div>
+
                     </div>
                     <br>
                     <hr>
@@ -204,7 +210,14 @@
                 </form>
             </div><!-- /.box -->
             <!-- Finaliza contenido -->
+
+            <div class="container" id="el">
+                @{{query}}
+                <modal></modal>
+            </div>
+
         </div>
     </div>
 </section><!-- /.content -->
+@include( 'admin.ruta.form.selecProceso' ) 
 @stop

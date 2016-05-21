@@ -9,14 +9,18 @@ Route::get(
 
 Route::get(
     '/', function () {
-        return View::make('login');
+        if (Session::has('accesos')) {
+            return Redirect::to('/admin.inicio');
+        } else {
+            return View::make('login');
+        }
     }
 );
 
 Route::get(
     'salir', function () {
         Auth::logout();
-
+        Session::flush();
         return Redirect::to('/');
     }
 );
