@@ -7,85 +7,40 @@ $(document).ready(function() {
     $('#categoriaModal').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget); // captura al boton
       var titulo = button.data('titulo'); // extrae del atributo data-
-      var area_id = button.data('id');
-      // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-      // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+      var categoria_id = button.data('id');
+
       var modal = $(this); //captura el modal
-      modal.find('.modal-title').text(titulo+' Area');
-      $('#form_areas [data-toggle="tooltip"]').css("display","none");
-      $("#form_areas input[type='hidden']").remove();
+      modal.find('.modal-title').text(titulo+' Categoria');
+      $('#form_categorias [data-toggle="tooltip"]').css("display","none");
+      $("#form_categorias input[type='hidden']").remove();
 
         if(titulo=='Nuevo'){
 
             modal.find('.modal-footer .btn-primary').text('Guardar');
             modal.find('.modal-footer .btn-primary').attr('onClick','Agregar();');
-            $('#form_areas #slct_estado').val(1);
-            $('#form_areas #txt_nombre').focus();
-        }
-        else{
-            var id = CategoriaObj[area_id].id;
-            if (CategoriaObj[area_id].imagen===null || CategoriaObj[area_id].imagen==='')
-                $("#img_imagen_").attr( "src",'');
-            else
-                $("#img_imagen_").attr( "src", 'img/admin/area/'+CategoriaObj[area_id].imagen );
+            $('#form_categorias #slct_estado').val(1);
+            $('#form_categorias #txt_nombre').focus();
 
-            if (CategoriaObj[area_id].imagenc===null || CategoriaObj[area_id].imagenc==='')
-                $("#img_imagenc").attr( "src", '');
-            else
-                $("#img_imagenc").attr( "src", 'img/admin/area/'+CategoriaObj[area_id].imagenc );
-            if (CategoriaObj[area_id].imagenp===null || CategoriaObj[area_id].imagenp==='')
-                $("#img_imagenp").attr( "src",'');
-            else
-                $("#img_imagenp").attr( "src", 'img/admin/area/'+CategoriaObj[area_id].imagenp );
-
+        } else {
+            var id = CategoriaObj[categoria_id].id;
 
             modal.find('.modal-footer .btn-primary').text('Actualizar');
             modal.find('.modal-footer .btn-primary').attr('onClick','Editar();');
-            $('#form_areas #txt_nombre').val( CategoriaObj[area_id].nombre );
-            $('#form_areas #txt_nemonico').val( CategoriaObj[area_id].nemonico );
-            $('#form_areas #slct_estado').val( CategoriaObj[area_id].estado );
-            $("#form_areas").append("<input type='hidden' value='"+id+"' name='id'>");
-            $("#upload_id").val(CategoriaObj[area_id].id);
-            $("#upload_idc").val(CategoriaObj[area_id].id);
-            $("#upload_idp").val(CategoriaObj[area_id].id);
+            $('#form_categorias #txt_nombre').val( CategoriaObj[categoria_id].nombre );
+            $('#form_categorias #slct_estado').val( CategoriaObj[categoria_id].estado );
+            $("#form_categorias").append("<input type='hidden' value='"+id+"' name='id'>");
         }
-        $("#upload_imagen").on('change',function() {
-            CargarImagen(this, 'imagen_');
-        });
-        $("#upload_imagenc").on('change',function() {
-            CargarImagen(this, 'imagenc');
-        });
-        $("#upload_imagenp").on('change',function() {
-            CargarImagen(this, 'imagenp');
-        });
+
     });
 
     $('#categoriaModal').on('hide.bs.modal', function (event) {
-        var modal = $(this); //captura el modal
-        modal.find('.modal-body input').val(''); // busca un input para copiarle texto
-        $("#upload_imagen").val('');
-        $("#upload_imagenc").val('');
-        $("#upload_imagenp").val('');
-        $("#img_imagen_").attr( "src", '' );
-        $("#img_imagenp").attr( "src", '' );
-        $("#img_imagenc").attr( "src", '' );
+        var modal = $(this);
+        modal.find('.modal-body input').val('');
     });
 });
 beforeSubmit = function (){};
 success = function (){};
-activarTabla = function(){
-    $("#t_categorias").dataTable(); // inicializo el datatable
-};
 
-Editar=function(){
-    if(validaAreas()){
-        Areas.AgregarEditarArea(1);
-    }
-};
-
-activar=function(id){
-    Areas.CambiarEstadoAreas(id,1);
-};
 HTMLCargarCategorias = function(datos){
     var html="", estadohtml="";
     $('#t_categorias').dataTable().fnDestroy();
@@ -105,32 +60,30 @@ HTMLCargarCategorias = function(datos){
     $("#tb_categorias").html(html);
     activarTabla();
 };
-CargarImagen=function(input, html){
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            $('#img_'+html).attr('src', e.target.result);
-        };
-
-        reader.readAsDataURL(input.files[0]);
+activarTabla = function(){
+    $("#t_categorias").dataTable(); // inicializo el datatable
+};
+activar = function(id){
+    Categorias.CambiarEstadoCategorias(id, 1);
+};
+desactivar = function(id){
+    Categorias.CambiarEstadoCategorias(id, 0);
+};
+Editar = function(){
+    if(validaCategorias()){
+        Categorias.AgregarEditarCategoria(1);
     }
 };
-desactivar=function(id){
-    Areas.CambiarEstadoAreas(id,0);
-};
-
-Agregar=function(){
-    if(validaAreas()){
-        Areas.AgregarEditarArea(0);
+Agregar = function(){
+    if(validaCategorias()){
+        Categorias.AgregarEditarCategoria(0);
     }
 };
-
-validaAreas=function(){
-    $('#form_areas [data-toggle="tooltip"]').css("display","none");
-    var a=[];
-    a[0]=valida("txt","nombre","");
-    var rpta=true;
+validaCategorias = function(){
+    $('#form_categorias [data-toggle="tooltip"]').css("display","none");
+    var a = [];
+    a[0] = valida("txt", "nombre", "");
+    var rpta = true;
 
     for(i=0;i<a.length;i++){
         if(a[i]===false){
@@ -140,13 +93,12 @@ validaAreas=function(){
     }
     return rpta;
 };
+valida = function(inicial, id, v_default){
+    var texto = "Seleccione";
 
-valida=function(inicial,id,v_default){
-    var texto="Seleccione";
     if(inicial=="txt"){
-        texto="Ingrese";
+        texto = "Ingrese";
     }
-
     if( $.trim($("#"+inicial+"_"+id).val())==v_default ){
         $('#error_'+id).attr('data-original-title',texto+' '+id);
         $('#error_'+id).css('display','');

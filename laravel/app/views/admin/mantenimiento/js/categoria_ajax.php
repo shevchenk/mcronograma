@@ -1,23 +1,14 @@
 <script type="text/javascript">
 
-var area_id, CategoriaObj;
+var CategoriaObj;
 
 var Categorias = {
-    AgregarEditarArea:function(AE){
+    AgregarEditarCategoria:function(AE){
 
-        var datos=$("#form_areas").serialize().split("txt_").join("").split("slct_").join("");
-        var accion="area/crear";
-        if(AE==1){
-            accion="area/editar";
-            $('#form_imagen_').ajaxForm(options).submit();
-            $('#form_imagenp').ajaxForm(options).submit();
-            $('#form_imagenc').ajaxForm(options).submit();
-        }
-        var options = {
-            beforeSubmit:   beforeSubmit(),
-            success:        success(),
-            dataType: 'json'
-        };
+        var datos = $("#form_categorias").serialize().split("txt_").join("").split("slct_").join("");
+
+        var accion = (AE==1) ? "categoria/editar" : "categoria/crear";
+
         $.ajax({
             url         : accion,
             type        : 'POST',
@@ -28,18 +19,9 @@ var Categorias = {
                 $("body").append('<div class="overlay"></div><div class="loading-img"></div>');
             },
             success : function(obj) {
-                $(".overlay,.loading-img").remove();
+                $(".overlay, .loading-img").remove();
                 if(obj.rst==1){
-                    if(AE==0){//subir imagenes despues de crear el area
-                        var area_id=obj.area_id
-                        $('#upload_id').val(area_id);
-                        $('#upload_idc').val(area_id);
-                        $('#upload_idp').val(area_id);
-                        $('#form_imagen_').ajaxForm(options).submit();
-                        $('#form_imagenc').ajaxForm(options).submit();
-                        $('#form_imagenp').ajaxForm(options).submit();
-                    }
-                    $('#t_areas').dataTable().fnDestroy();
+                    $('#t_categorias').dataTable().fnDestroy();
 
                     Categorias.CargarCategorias(activarTabla);
                     $("#msj").html('<div class="alert alert-dismissable alert-success">'+
@@ -48,12 +30,11 @@ var Categorias = {
                                         '<b>'+obj.msj+'</b>'+
                                     '</div>');
 
-                    $('#areaModal .modal-footer [data-dismiss="modal"]').click();
+                    $('#categoriaModal .modal-footer [data-dismiss="modal"]').click();
 
-                }
-                else{
-                    $.each(obj.msj,function(index,datos){
-                        $("#error_"+index).attr("data-original-title",datos);
+                } else {
+                    $.each(obj.msj, function(index, datos){
+                        $("#error_"+index).attr("data-original-title", datos);
                         $('#error_'+index).css('display','');
                     });
                 }
@@ -83,7 +64,7 @@ var Categorias = {
                     HTMLCargarCategorias(obj.datos);
                     CategoriaObj = obj.datos;
                 }
-                $(".overlay,.loading-img").remove();
+                $(".overlay, .loading-img").remove();
             },
             error: function(){
                 $(".overlay,.loading-img").remove();
@@ -95,12 +76,14 @@ var Categorias = {
             }
         });
     },
-    CambiarEstadoAreas:function(id,AD){
-        $("#form_areas").append("<input type='hidden' value='"+id+"' name='id'>");
-        $("#form_areas").append("<input type='hidden' value='"+AD+"' name='estado'>");
-        var datos=$("#form_areas").serialize().split("txt_").join("").split("slct_").join("");
+    CambiarEstadoCategorias: function(id, AD){
+
+        $("#form_categorias").append("<input type='hidden' value='"+id+"' name='id'>");
+        $("#form_categorias").append("<input type='hidden' value='"+AD+"' name='estado'>");
+
+        var datos = $("#form_categorias").serialize().split("txt_").join("").split("slct_").join("");
         $.ajax({
-            url         : 'area/cambiarestado',
+            url         : 'categoria/cambiarestado',
             type        : 'POST',
             cache       : false,
             dataType    : 'json',
@@ -109,19 +92,21 @@ var Categorias = {
                 $("body").append('<div class="overlay"></div><div class="loading-img"></div>');
             },
             success : function(obj) {
-                $(".overlay,.loading-img").remove();
-                if(obj.rst==1){
-                    $('#t_areas').dataTable().fnDestroy();
+                $(".overlay, .loading-img").remove();
+
+                if (obj.rst==1) {
+
+                    $('#t_categorias').dataTable().fnDestroy();
                     Categorias.CargarCategorias(activarTabla);
+
                     $("#msj").html('<div class="alert alert-dismissable alert-info">'+
                                         '<i class="fa fa-info"></i>'+
                                         '<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>'+
                                         '<b>'+obj.msj+'</b>'+
                                     '</div>');
-                    $('#areaModal .modal-footer [data-dismiss="modal"]').click();
-                }
-                else{
-                    $.each(obj.msj,function(index,datos){
+                    $('#categoriaModal .modal-footer [data-dismiss="modal"]').click();
+                } else {
+                    $.each(obj.msj, function(index, datos) {
                         $("#error_"+index).attr("data-original-title",datos);
                         $('#error_'+index).css('display','');
                     });
@@ -130,10 +115,10 @@ var Categorias = {
             error: function(){
                 $(".overlay,.loading-img").remove();
                 $("#msj").html('<div class="alert alert-dismissable alert-danger">'+
-                                        '<i class="fa fa-ban"></i>'+
-                                        '<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>'+
-                                        '<b>Ocurrio una interrupción en el proceso,Favor de intentar nuevamente.'+
-                                    '</div>');
+                                    '<i class="fa fa-ban"></i>'+
+                                    '<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>'+
+                                    '<b>Ocurrio una interrupción en el proceso,Favor de intentar nuevamente.'+
+                                '</div>');
             }
         });
     }

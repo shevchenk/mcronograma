@@ -62,5 +62,5 @@
 @stop
 
 @section('formulario')
-     @include( 'admin.mantenimiento.form.area' )
+     @include( 'admin.mantenimiento.form.categoria' )
 @stop
