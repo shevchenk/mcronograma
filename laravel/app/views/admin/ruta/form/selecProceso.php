@@ -15,7 +15,7 @@
                         <i class="fa fa-exclamation"></i>
                     </a>
                   </label>
-                  <select class="form-control" name="slct_categoria_id" id="slct_categoria_id">
+                  <select class="form-control" name="slct_proceso_id" id="slct_proceso_id">
                   </select>
               </div>
             </form>
@@ -23,7 +23,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" v-on:click="greet">Save changes</button>
+            <button type="button" class="btn btn-primary" v-on:click="nuevaCartaInicio">Save changes</button>
           </div>
         </div>
       </div>
@@ -34,10 +34,10 @@
     Vue.component('modal', {
         template: '#bs-modal',
         data: function () {
-            console.log("### DATA");
+            //console.log("### DATA");
         },
         methods: {
-          greet: function (event) {
+          nuevaCartaInicio: function (event) {
             $("#cartainicio").css("display","");
             $("#txt_nro_carta").focus();
             var datos={area_id:AreaIdG};
@@ -50,7 +50,26 @@
       el: '#el',
       data: {
         query: "select * from clients;",
+        procesos:{},
       },
+      methods: {
+        fetchProcesos: function () {
+          /*this.$http.post('/flujo/listar', function (data) {
+
+              this.$set('procesos', data);
+              $("#procesos").multiselect();
+
+          });*/
+          var data={usuario:1};
+          slctGlobal.listarSlct('flujo/listar','slct_proceso_id','simple',null,data);
+
+        },
+
+      },
+      ready: function () {
+        this.fetchProcesos();
+      },
+
     });
 
 </script>
