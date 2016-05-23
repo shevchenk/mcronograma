@@ -62,14 +62,16 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="col-sm-12">
+                        <!--<div class="col-sm-12">
                             <a class="btn btn-primary btn-sm" id="btn_nuevo">
                                 <i class="fa fa-save fa-lg"></i>&nbsp;Nuevo
                             </a>
-                        </div>
+                        </div>-->
 
                         <div class="col-sm-12">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Modal</button>
+                            <a class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#selecProcesoModal">
+                                <i class="fa fa-save fa-lg"></i>&nbsp;Nuevo
+                            </a>
                         </div>
 
                     </div>
@@ -116,7 +118,7 @@
                         </div>
                         <div class="col-sm-12">
                                 <label class="box box-solid bg-blue">
-                                <a id="btn_recursos_0" onclick="AddTr(this.id);" class="btn btn-success btn-sm">
+                                <a id="btn_recursos_0" onclick="AddTr(this.id,null);" class="btn btn-success btn-sm">
                                     <i class="fa fa-plus fa-lg"></i>
                                 </a>
                                 Recursos (No humanos):
@@ -143,7 +145,7 @@
                         </div>
                         <div class="col-sm-12">
                                 <label class="box box-solid bg-blue">
-                                <a id="btn_metricos_1" onclick="AddTr(this.id);" class="btn btn-success btn-sm">
+                                <a id="btn_metricos_1" onclick="AddTr(this.id,null);" class="btn btn-success btn-sm">
                                     <i class="fa fa-plus fa-lg"></i>
                                 </a>
                                 Métricos:
@@ -171,7 +173,7 @@
                         </div>
                         <div class="col-sm-12">
                                 <label class="box box-solid bg-blue">
-                                <a id="btn_desgloses_2" onclick="AddTr(this.id);" class="btn btn-success btn-sm">
+                                <a id="btn_desgloses_2" onclick="AddTr(this.id,null);" class="btn btn-success btn-sm">
                                     <i class="fa fa-plus fa-lg"></i>
                                 </a>
                                 Desglose de Carta de Inicio N°:
@@ -212,7 +214,7 @@
             <!-- Finaliza contenido -->
 
             <div class="container" id="el">
-                @{{query}}
+                @{{ /* query*/ }}
                 <modal></modal>
             </div>
 

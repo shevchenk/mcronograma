@@ -1,29 +1,29 @@
 <template id="bs-modal">
     <!-- MODAL -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="selecProcesoModal" tabindex="-1" role="dialog" aria-labelledby="selecProcesoModal">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            <h4 class="modal-title" id="selecProcesoModal">Seleccione Proceso</h4>
           </div>
           <div class="modal-body">
             <form id="form_flujos" name="form_flujos" action="" method="post">
               <div class="form-group">
-                  <label class="control-label">Categoria:
-                    <a id="error_categoria" style="display:none" class="btn btn-sm btn-warning" data-toggle="tooltip" data-placement="bottom" title="Seleccione Categoria">
+                  <label class="control-label">Procesos:
+                    <a id="error_proceso" style="display:none" class="btn btn-sm btn-warning" data-toggle="tooltip" data-placement="bottom" title="Seleccione Proceso">
                         <i class="fa fa-exclamation"></i>
                     </a>
                   </label>
-                  <select class="form-control" name="slct_proceso_id" id="slct_proceso_id">
+                  <select class="form-control" name="slct_flujo_id" id="slct_flujo_id">
                   </select>
               </div>
             </form>
 
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" v-on:click="nuevaCartaInicio">Save changes</button>
+            <button type="button" class="btn btn-default" @click="cerrarModal" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" @click="nuevaCartaInicio">Aceptar</button>
           </div>
         </div>
       </div>
@@ -37,11 +37,22 @@
             //console.log("### DATA");
         },
         methods: {
+          cerrarModal: function(){
+            $('#slct_flujo_id').val('');
+            $('#slct_flujo_id').multiselect('refresh');
+          },
           nuevaCartaInicio: function (event) {
+            
+            var datos={flujo_id:$("#slct_flujo_id").val()};
+            Carta.CargarDetalleCartas(HTMLCargarDetalleCartas,datos);
+
             $("#cartainicio").css("display","");
             $("#txt_nro_carta").focus();
             var datos={area_id:AreaIdG};
             Carta.CargarCorrelativo(HTMLCargarCorrelativo,datos);
+            $('#selecProcesoModal .modal-footer [data-dismiss="modal"]').click();
+            $('#slct_flujo_id').val('');
+            $('#slct_flujo_id').multiselect('refresh');
           }
         },
     });
@@ -50,21 +61,14 @@
       el: '#el',
       data: {
         query: "select * from clients;",
-        procesos:{},
+        showModal: false
       },
       methods: {
         fetchProcesos: function () {
-          /*this.$http.post('/flujo/listar', function (data) {
-
-              this.$set('procesos', data);
-              $("#procesos").multiselect();
-
-          });*/
-          var data={usuario:1};
-          slctGlobal.listarSlct('flujo/listar','slct_proceso_id','simple',null,data);
-
-        },
-
+          //cargar procesos: (TABLA flujos)
+          data={soloruta:1,tipo_flujo:2,pasouno:1};
+          slctGlobal.listarSlct('flujo','slct_flujo_id','simple',null,data)
+        }
       },
       ready: function () {
         this.fetchProcesos();

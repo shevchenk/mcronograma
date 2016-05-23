@@ -99,6 +99,20 @@ class Carta extends Base
                     WHERE c.id = '".Input::get('carta_id')."'
                     GROUP BY c.id";
         }
+        elseif (Input::has('flujo_id')) {
+            //gerente o subgerente de las areas a cargo
+            $sql="  SELECT f.id, f.nombre, f.estado,
+                    f.area_id, f.area_id as evento, 
+                    IF(f.tipo_flujo=1,'Trámite','Proceso de oficio') as tipo_flujo,
+                    f.tipo_flujo as tipo_flujo_id,
+                    CONCAT(p.id,'-', a.id) as responsable_area
+                    FROM flujos AS f 
+                    INNER JOIN rutas_flujo AS rf ON rf.flujo_id = f.id AND rf.estado = 1
+                    INNER JOIN rutas_flujo_detalle AS rfd ON rfd.ruta_flujo_id = rf.id   AND rfd.estado=1
+                    INNER JOIN areas AS a ON a.id = rfd.area_id 
+                    LEFT JOIN personas p ON p.area_id=a.id AND (p.rol_id='8' OR p.rol_id='9' )
+                    WHERE  f.estado = 1 AND f.id ='".Input::get('flujo_id')."'";
+        }
         else {
             $sql="  SELECT c.id,c.nro_carta,c.objetivo,c.entregable,c.alcance, c.informe_objetivo, c.informe_alcance, c.informe_entregable,
                     GROUP_CONCAT( 
@@ -151,7 +165,7 @@ class Carta extends Base
                     WHERE c.id = '".Input::get('carta_id')."'
                     GROUP BY c.id";
         }
-        $set=DB::select('SET group_concat_max_len := @@max_allowed_packet');
+        $set=DB::statement('SET group_concat_max_len := @@max_allowed_packet');
         $r=DB::select($sql);
 
         return $r;

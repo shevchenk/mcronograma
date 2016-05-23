@@ -26,6 +26,7 @@ $(document).ready(function() {
     AreaIdG='<?php echo Auth::user()->area_id; ?>';
     ValidaAreaRol();
 });
+eventoSlctGlobalSimple=function(){};
 
 ValidaAreaRol=function(){
     if(AreaIdG!='' && AreaIdG*1>0){
@@ -82,13 +83,13 @@ Guardar=function(){
     }
 }
 
-AddTr=function(id){
+AddTr=function(id, data){
     var idf=id.split("_")[1];
     var pos=id.split("_")[2];
     PosCarta[pos]++;
     var datatext=""; var dataid="";
     var clase="";
-    var ctype=""; var ccopy=""; var vcopy=[];
+    var ctype=""; var ccopy=""; var vcopy=[]; var valarray=[];
 
     var add="<tr id='tr_"+idf+"_"+PosCarta[pos]+"'>";
         add+="<td>";
@@ -151,7 +152,9 @@ AddTr=function(id){
 
     for (var i = 0; i < vcopy.length; i++) {
         $("#"+vcopy[i].split("|")[0]).html( $("#"+vcopy[i].split("|")[1]).html() );
-
+        if (data.responsable_area!=null && vcopy[i].indexOf('slct_persona_id')>=0) {
+            $("#"+vcopy[i].split("|")[0]).val( data.responsable_area );
+        }
         slctGlobalHtml(vcopy[i].split("|")[0],'simple');
         $(".multiselect").css("font-size","11px").css("text-transform","lowercase");
         $(".multiselect-container>li").css("font-size","12px").css("text-transform","lowercase");
@@ -188,6 +191,12 @@ Nuevo=function(){
     $("#txt_nro_carta").focus();
     var datos={area_id:AreaIdG};
     Carta.CargarCorrelativo(HTMLCargarCorrelativo,datos);
+}
+HTMLCargarDetalleCartas=function(datos){
+    var des=[];
+    $.each(datos,function(index,data){
+        AddTr('btn_desgloses_2',data);
+    });
 }
 
 HTMLCargarCorrelativo=function(obj){
