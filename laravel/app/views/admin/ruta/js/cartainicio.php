@@ -181,12 +181,6 @@ RemoveTr=function(id){
 }
 
 Nuevo=function(){
-    //seleccionar proceso al que pertenecera la carta
-    //para obtener los tiempos asignados y la cantidad de pasos a asignarse
-
-
-
-
     $("#cartainicio").css("display","");
     $("#txt_nro_carta").focus();
     var datos={area_id:AreaIdG};
