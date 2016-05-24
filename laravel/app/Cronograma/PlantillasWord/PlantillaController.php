@@ -25,20 +25,6 @@ class PlantillaController extends \BaseController {
         }
     }
     /**
-     * cargar plantillas
-     * GET /plantilla/cargar
-     */
-    public function postCargardetalle()
-    {
-        if ( Request::ajax() ) {
-            $plantilla = Plantilla::find(Input::get('id'));
-            $html = $plantilla->cuerpo;
-
-//$HTMLPath='';
-            return Response::json(array('rst'=>1,'datos'=>$html));
-        }
-    }
-    /**
      * Actualizar plantilla
      * POST /plantilla/editar
      */
@@ -47,9 +33,8 @@ class PlantillaController extends \BaseController {
         if ( Request::ajax() ) {
             $html = Input::get('word', '');
             $file = Helpers::convertHtmlToWord($html , Input::get('nombre') );
-
+            $newfile= public_path().'/templates/'.Input::get('nombre').'.docx';
             if ( copy($file, $newfile) ) {
-
                 $plantilla = Plantilla::find(Input::get('id'));
                 $plantilla->nombre = Input::get('nombre');
                 $plantilla->path = '';
@@ -58,7 +43,6 @@ class PlantillaController extends \BaseController {
                 $plantilla->usuario_updated_at = Auth::user()->id;
                 $plantilla->save();
                 return Response::json(array('rst'=>1, 'msj'=>'Registro actualizado correctamente'));
-            
             } else{
                 return Response::json(array('rst'=>2, 'msj'=>'Hubo problemas'));
             }
@@ -75,23 +59,40 @@ class PlantillaController extends \BaseController {
         if ( Request::ajax() ) {
             $html = Input::get('word', '');
             $file = Helpers::convertHtmlToWord($html , Input::get('nombre') );
-            $newfile= public_path().'/docs/'.Input::get('nombre').'.docx';
-
+            $newfile= public_path().'/templates/'.Input::get('nombre').'.docx';
             if ( copy($file, $newfile) ) {
                 $plantilla = new Plantilla;
                 $plantilla->nombre = Input::get('nombre');
                 $plantilla->path = $newfile;
                 $plantilla->cuerpo = $html;
                 $plantilla->estado = Input::get('estado');
-                $plantilla->usuario_updated_at = Auth::user()->id;
+                $plantilla->usuario_created_at = Auth::user()->id;
                 $plantilla->save();
                 return Response::json(array('rst'=>1, 'msj'=>'Registro actualizado correctamente'));
             
             } else{
-                
                 return Response::json(array('rst'=>2, 'msj'=>'Hubo problemas'));
             }
-
+        }
+    }
+    /**
+     * Changed the specified resource from storage.
+     * POST /plantilla/cambiarestado
+     *
+     * @return Response
+     */
+    public function postCambiarestado()
+    {
+        if (Request::ajax() && Input::has('id') && Input::has('estado')) {
+            $plantilla = Plantilla::find(Input::get('id'));
+            $plantilla->estado = Input::get('estado');
+            $plantilla->save();
+            return Response::json(
+                array(
+                    'rst' => 1,
+                    'msj' => 'Registro actualizado correctamente',
+                )
+            );
         }
     }
 }

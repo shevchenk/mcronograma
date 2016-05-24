@@ -28,10 +28,9 @@
                 </select>
             </div>
           </div>
-            <div class="form-group">
-                <textarea id="word" name="word">Hello, World!</textarea>
-            </div>
-            <button name="submitbtn"></button>
+          <div class="form-group">
+              <textarea id="word" name="word"></textarea>
+          </div>
         </form>
       </div>
       <div class="modal-footer">

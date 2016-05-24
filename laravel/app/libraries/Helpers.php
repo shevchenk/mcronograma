@@ -10,7 +10,7 @@ class Helpers
                                      )
   {
 
-    $dir= public_path().'/templates/';
+    $dir= public_path().'/docs/';
     $PHPWord = new PHPWord();
 
     $document = $PHPWord->loadTemplate($dir.'Template.docx');

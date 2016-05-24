@@ -31,6 +31,7 @@
 		    {{ HTML::style('css/admin/admin.css') }}
 		    {{ HTML::script('lib/datatables-1.10.4/media/js/jquery.dataTables.js') }}
 		    {{ HTML::script('lib/datatables-1.10.4/media/js/dataTables.bootstrap.js') }}
+            {{ HTML::script('js/utils.js') }}
 		    @include( 'admin.js.app' )
 		@show
 	</head>

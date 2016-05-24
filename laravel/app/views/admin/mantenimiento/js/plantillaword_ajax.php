@@ -3,17 +3,12 @@ var plantilla_id, PlantillaObj;
 var Plantillas={
     AgregarEditar:function(AE){
         $("#form_plantilla input[name='word']").remove();
-        var ed = tinyMCE.get('word');
-        var word = ed.getContent();
-
-        $("#form_plantilla").append("<input type='hidden' value='"+word+"' name='word'>");
-
+        $("#form_plantilla").append("<input type='hidden' value='"+tinyMCE.get('word').getContent()+"' name='word'>");
         var datos=$("#form_plantilla").serialize().split("txt_").join("").split("slct_").join("");
         var accion="plantilla/crear";
         if(AE==1){
             accion="plantilla/editar";
         }
-
         $.ajax({
             url         : accion,
             type        : 'POST',
@@ -27,16 +22,11 @@ var Plantillas={
                 $(".overlay,.loading-img").remove();
                 if(obj.rst==1){
                     $('#t_plantilla').dataTable().fnDestroy();
-
                     Plantillas.Cargar(activarTabla);
-                    $("#msj").html('<div class="alert alert-dismissable alert-success">'+
-                                        '<i class="fa fa-check"></i>'+
-                                        '<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>'+
-                                        '<b>'+obj.msj+'</b>'+
-                                    '</div>');
+                    alertBootstrap('success', obj.msj, 6);
                     $('#plantillaModal .modal-footer [data-dismiss="modal"]').click();
                 }
-                else{ 
+                else{
                     $.each(obj.msj,function(index,datos){
                         $("#error_"+index).attr("data-original-title",datos);
                         $('#error_'+index).css('display','');
@@ -45,11 +35,7 @@ var Plantillas={
             },
             error: function(){
                 $(".overlay,.loading-img").remove();
-                $("#msj").html('<div class="alert alert-dismissable alert-danger">'+
-                                    '<i class="fa fa-ban"></i>'+
-                                    '<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>'+
-                                    '<b>Ocurrio una interrupción en el proceso,Favor de intentar nuevamente.'+
-                                '</div>');
+                alertBootstrap('danger', 'Ocurrio una interrupción en el proceso,Favor de intentar nuevamente', 6);
             }
         });
     },
@@ -71,11 +57,7 @@ var Plantillas={
             },
             error: function(){
                 $(".overlay,.loading-img").remove();
-                $("#msj").html('<div class="alert alert-dismissable alert-danger">'+
-                                    '<i class="fa fa-ban"></i>'+
-                                    '<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>'+
-                                    '<b>Ocurrio una interrupción en el proceso,Favor de intentar nuevamente.'+
-                                '</div>');
+                alertBootstrap('danger', 'Ocurrio una interrupción en el proceso,Favor de intentar nuevamente', 6);
             }
         });
     },
@@ -94,17 +76,17 @@ var Plantillas={
             },
             success : function(obj) {
                 if(obj.rst==1){
-                    $('#word').val(obj.datos);
+                    if (obj.datos == null) {
+                        $('#word').val(obj.datos);
+                    } else {
+                        $('#word').val('');
+                    }
                 }
                 $(".overlay,.loading-img").remove();
             },
             error: function(){
                 $(".overlay,.loading-img").remove();
-                $("#msj").html('<div class="alert alert-dismissable alert-danger">'+
-                                    '<i class="fa fa-ban"></i>'+
-                                    '<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>'+
-                                    '<b>Ocurrio una interrupción en el proceso,Favor de intentar nuevamente.'+
-                                '</div>');
+                alertBootstrap('danger', 'Ocurrio una interrupción en el proceso,Favor de intentar nuevamente', 6);
             }
         });
     },
@@ -126,14 +108,10 @@ var Plantillas={
                 if(obj.rst==1){
                     $('#t_plantilla').dataTable().fnDestroy();
                     Plantillas.Cargar(activarTabla);
-                    $("#msj").html('<div class="alert alert-dismissable alert-info">'+
-                                        '<i class="fa fa-info"></i>'+
-                                        '<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>'+
-                                        '<b>'+obj.msj+'</b>'+
-                                    '</div>');
+                    alertBootstrap('success', obj.msj, 6);
                     $('#plantillaModal .modal-footer [data-dismiss="modal"]').click();
                 }
-                else{ 
+                else{
                     $.each(obj.msj,function(index,datos){
                         $("#error_"+index).attr("data-original-title",datos);
                         $('#error_'+index).css('display','');
@@ -142,11 +120,7 @@ var Plantillas={
             },
             error: function(){
                 $(".overlay,.loading-img").remove();
-                $("#msj").html('<div class="alert alert-dismissable alert-danger">'+
-                                    '<i class="fa fa-ban"></i>'+
-                                    '<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>'+
-                                    '<b>Ocurrio una interrupción en el proceso,Favor de intentar nuevamente.'+
-                                '</div>');
+                alertBootstrap('danger', 'Ocurrio una interrupción en el proceso,Favor de intentar nuevamente', 6);
             }
         });
     }
