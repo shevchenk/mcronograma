@@ -89,6 +89,7 @@ Route::get(
     )
 );
 
+Route::controller('plantilla', 'Cronograma\PlantillasWord\PlantillaController');
 Route::controller('categoria', 'Cronograma\Categoria\CategoriaController');
 Route::controller('area', 'AreaController');
 Route::controller('cargo', 'CargoController');
@@ -119,3 +120,4 @@ Route::controller('carta', 'CartaController');
 Route::controller('tiporecurso', 'TipoRecursoController');
 Route::controller('tipoactividad', 'TipoActividadController');
 Route::controller('reportef', 'ReporteFinalController');
+Route::controller('fechanolaborable', 'Cronograma\Fechanolaborable\FechanolaborableController');
