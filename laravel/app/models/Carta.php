@@ -157,11 +157,13 @@ class Carta extends Base
                             ) 
                         )
                         SEPARATOR '*' 
-                    ) desgloses
+                    ) desgloses,
+                    IFNULL(f.id,'') as flujo_id, f.nombre as flujo
                     FROM cartas c
                     LEFT JOIN carta_recurso cr ON c.id=cr.carta_id AND cr.estado=1
                     LEFT JOIN carta_metrico cm ON c.id=cm.carta_id AND cm.estado=1
                     LEFT JOIN carta_desglose cd ON c.id=cd.carta_id AND cd.estado=1
+                    LEFT JOIN flujos f ON c.flujo_id=f.id
                     WHERE c.id = '".Input::get('carta_id')."'
                     GROUP BY c.id";
         }
