@@ -257,6 +257,7 @@ class Carta extends Base
                 $carta=new Carta;
                 $carta['usuario_created_at']=Auth::user()->id;
                 $carta['area_id']=Input::get('area_id');
+                $carta['flujo_id']=Input::get('flujo_id');
                 $carta['nro_carta']=Input::get('nro_carta');
                 $correlativo=explode("-",Input::get('nro_carta'));
                 $carta['correlativo']= $correlativo[1]*1;

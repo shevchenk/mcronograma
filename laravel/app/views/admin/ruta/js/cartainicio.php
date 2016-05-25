@@ -186,8 +186,10 @@ Nuevo=function(){
     var datos={area_id:AreaIdG};
     Carta.CargarCorrelativo(HTMLCargarCorrelativo,datos);
 }
-HTMLCargarDetalleCartas=function(datos){
+HTMLCargarDetalleCartas=function(datos, flujo){
     var des=[];
+    $('#txt_flujo').val( flujo.nombre);
+    $('#txt_flujo_id').val( flujo.flujo_id);
     $.each(datos,function(index,data){
         AddTr('btn_desgloses_2',data);
     });
