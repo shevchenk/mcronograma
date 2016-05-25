@@ -61,3 +61,5 @@ CREATE TABLE `nro_max_alerta` (
 
 -- tabla para el mantenimiento de archivo y configuracion de mensaje a criterio de uds.
 
+ALTER TABLE `ingind`.`cartas`   
+  ADD COLUMN `flujo_id` INT(11) NULL  COMMENT 'FK de la tabla flujo (proceso al que pertenece la carta' AFTER `estado`;

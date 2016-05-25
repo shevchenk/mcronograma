@@ -42,13 +42,18 @@
             $('#slct_flujo_id').multiselect('refresh');
           },
           nuevaCartaInicio: function (event) {
+            if ( $("#slct_flujo_id").val()=='') {
+              alert("Seleccione Proceso");
+              return ;
+            }
             //seleccionar proceso al que pertenecera la carta
             //para obtener los tiempos asignados y la cantidad de pasos a asignarse
             $("#form_carta input[type='text'],#form_carta textarea,#form_carta select").val("");
             $("#t_recursos tbody,#t_metricos tbody,#t_desgloses tbody").html("");
 
-            var datos={flujo_id:$("#slct_flujo_id").val()};
-            Carta.CargarDetalleCartas(HTMLCargarDetalleCartas,datos);
+            var nombre=$('#slct_flujo_id option:selected').text();
+            var flujo={flujo_id:$("#slct_flujo_id").val(),nombre:nombre};
+            Carta.CargarDetalleCartas(HTMLCargarDetalleCartas,flujo);
 
             $("#cartainicio").css("display","");
             $("#txt_nro_carta").focus();

@@ -78,19 +78,19 @@ var Carta={
             }
         });
     },
-    CargarDetalleCartas:function(evento,datos){
+    CargarDetalleCartas:function(evento,flujo){
         $.ajax({
             url         : 'carta/cargardetalle',
             type        : 'POST',
             cache       : false,
             dataType    : 'json',
-            data        : datos,
+            data        : flujo,
             beforeSend : function() {
                 $("body").append('<div class="overlay"></div><div class="loading-img"></div>');
             },
             success : function(obj) {
                 if(obj.rst==1){
-                    evento(obj.datos);
+                    evento(obj.datos,flujo);
                 }  
                 $(".overlay,.loading-img").remove();
             },
