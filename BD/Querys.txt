@@ -60,6 +60,22 @@ CREATE TABLE `nro_max_alerta` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- tabla para el mantenimiento de archivo y configuracion de mensaje a criterio de uds.
+CREATE TABLE `ingind`.`plantillas`(  
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(50),
+  `path` VARCHAR(50),
+  `estado` INT(1),
+  `created_at` DATETIME,
+  `updated_at` DATETIME,
+  `usuario_created_at` INT(11),
+  `usuario_updated_at` INT(11),
+  PRIMARY KEY (`id`)
+);
+
+
+ALTER TABLE `ingind`.`plantillas`   
+  ADD COLUMN `cuerpo` TEXT(10000) NULL AFTER `path`;
+
 
 ALTER TABLE `ingind`.`cartas`   
   ADD COLUMN `flujo_id` INT(11) NULL  COMMENT 'FK de la tabla flujo (proceso al que pertenece la carta' AFTER `estado`;
