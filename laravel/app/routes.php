@@ -89,6 +89,8 @@ Route::get(
     )
 );
 
+Route::controller('llamadaatencion', 'Cronograma\LlamadaAtencion\LlamadaatencionController');
+Route::controller('fechanolaborable', 'Cronograma\Fechanolaborable\FechaNolaborableController');
 Route::controller('plantilla', 'Cronograma\PlantillasWord\PlantillaController');
 Route::controller('categoria', 'Cronograma\Categoria\CategoriaController');
 Route::controller('area', 'AreaController');
