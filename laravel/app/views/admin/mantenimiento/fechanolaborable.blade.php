@@ -38,6 +38,31 @@
     <section class="content">
         <div class="row">
             <div class="col-md-3">
+                <div class="box box-primary">
+                    <div class="box-body">
+                        <h4>Filtro</h4>
+                        <form id="form_fechafiltro" name="form_fechafiltro" action="" method="post" >
+                          <div class="form-group">
+                            <label class="control-label">Fecha:</label>
+                            <input type="text" class="form-control fecha" placeholder="Fecha" name="txt_fechafiltro" id="txt_fechafiltro">
+                          </div>
+                          <div class="form-group">
+                            <label class="control-label">Area:</label>
+                            <select class="form-control" name="slct_areafiltro" id="slct_areafiltro"></select>
+                          </div>
+                          <div class="form-group">
+                            <label class="control-label">Estado:</label>
+                            <select class="form-control" name="slct_estadofiltro" id="slct_estadofiltro">
+                                <option value='0'>Inactivo</option>
+                                <option value='1' selected>Activo</option>
+                            </select>
+                          </div>
+                          <button type="button" class="btn btn-primary">
+                              <i class="fa fa-search fa-sm"></i>&nbsp;Buscar
+                           </button>
+                        </form>
+                    </div>
+                </div>
             </div>
             <div class="col-md-9">
                 <div class="box box-primary">

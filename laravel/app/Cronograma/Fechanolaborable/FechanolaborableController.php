@@ -64,10 +64,18 @@ class FechanolaborableController extends \BaseController {
             }
 
             $areaId = Input::get('area');
+            $general = ( !empty($areaId) && isset($areaId) )? 0:1;
+            $fecha = Input::get('fechanolaborable');
+
+            $fechaExiste = FechaLaborable::getFechaByArea($fecha, $areaId, $general);
+
+            if ( count($fechaExiste) > 0 ) {
+                return Response::json( array('rst'=>2, 'msj'=> array('fechanolaborable'=>array('Ya existe una fecha registrada.'))) );
+            }
 
             $fechalaborable = new FechaLaborable;
-            $fechalaborable->fecha = Input::get('fechanolaborable');
-            $fechalaborable->general = ( $areaId )? 0:1;
+            $fechalaborable->fecha = $fecha;
+            $fechalaborable->general = $general;
             $fechalaborable->estado = Input::get('estado');
             $fechalaborable->usuario_created_at = Auth::user()->id;
             $fechalaborable->save();
