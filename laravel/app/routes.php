@@ -122,3 +122,4 @@ Route::controller('tiporecurso', 'TipoRecursoController');
 Route::controller('tipoactividad', 'TipoActividadController');
 Route::controller('reportef', 'ReporteFinalController');
 Route::controller('fechanolaborable', 'Cronograma\Fechanolaborable\FechanolaborableController');
+Route::controller('reportec', 'Cronograma\Reporte\EstadoCronogramaTareaController');
