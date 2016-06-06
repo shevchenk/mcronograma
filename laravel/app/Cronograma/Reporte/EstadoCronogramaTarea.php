@@ -22,10 +22,17 @@ class EstadoCronogramaTarea
                 SELECT * FROM (
                    SELECT
                         f.id AS proceso_id, f.nombre AS proceso,
-                        fdetalle.cantidad_pasos_proceso,
+                        fdetalle.cantidad_pasos_proceso, fdetalle.dias_total,
                         rdetalle.cantidad_pasos_tramite, rdetalle.tramite,
                         rdetalle.estado, rdetalle.ultimo_paso,
-                        -- c.*,
+                        IF( rdetalle.ultimo_paso<>'', 
+                            (SELECT  dtiempo 
+                             FROM rutas_detalle rd
+                             WHERE rd.ruta_id=rdetalle.ruta_id
+                             AND rd.norden=rdetalle.ultimo_paso
+                             ),''
+                        ) AS dias_ultimo_paso,
+
                         cd.fecha_inicio,
                         cd.fecha_fin,
                         
@@ -44,8 +51,8 @@ class EstadoCronogramaTarea
                         flujos f 
                     INNER JOIN 
                     -- proceso
-                        (SELECT COUNT(rfd.id) AS cantidad_pasos_proceso , rf.flujo_id
-
+                        (SELECT COUNT(rfd.id) AS cantidad_pasos_proceso , rf.flujo_id,
+                         SUM( IF(rfd.tiempo_id='2' , rfd.dtiempo,0) ) AS dias_total
                          FROM rutas_flujo rf
                          INNER JOIN rutas_flujo_detalle rfd ON rf.id=rfd.ruta_flujo_id
                          WHERE rf.estado=1 AND rfd.estado=1
