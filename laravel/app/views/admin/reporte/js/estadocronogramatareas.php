@@ -1,6 +1,11 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
+    $('#txt_fecha').daterangepicker({
+        format: 'YYYY-MM-DD',
+        singleDatePicker: false,
+        showDropdowns: true
+    });
     $('#mostrar').click(function(event) {
         var filtro={};
         

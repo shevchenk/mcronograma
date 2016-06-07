@@ -59,13 +59,13 @@
                                 <div class="col-sm-3">
                                     <label class="control-label">Tramite:
                                     </label>
-                                    <input type="text" name="txt_tramite" id="txt_tramite" class="form-control">
+                                    <input type="text" name="txt_tramite" id="txt_tramite" class="form-control" placeholder="Tipo + Nro + Año  => Ej: EX {{ rand(3000,9999) }} {{ date("Y") }}">
                                 </div>
 
                                 <div class="col-sm-3">
                                     <label class="control-label">Fecha:
                                     </label>
-                                    <input type="text" name="txt_fecha" id="txt_fecha" class="form-control">
+                                    <input type="text" name="txt_fecha" id="txt_fecha" class="form-control" placeholder="AAAA-MM-DD - AAAA-MM-DD" onfocus="blur()">
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="control-label">
