@@ -1,16 +1,33 @@
 <script type="text/javascript">
-    
+
 $(document).ready(function(){
-    filtro=[];
-    CartaInicio.cargar(filtro, HTMLreportep);
+    $('#mostrar').click(function(event) {
+        var filtro={};
+        
+        if ($('#slct_semaforo').val()!=='') 
+            filtro.semaforo=$('#slct_semaforo').val();
+        
+        if ($('#txt_tramite').val()!=='') 
+            filtro.tramite = $('#txt_tramite').val();
+        
+        
+        if ($('#txt_fecha').val()!=='') 
+            filtro.fecha = $('#txt_fecha').val();
+        
+        CartaInicio.cargar(filtro, HTMLreportep);
+    });
 });
 activarTabla=function(){
     var table = $("#t_reporte").dataTable( {
-        "columnDefs": [ {
+            "bPaginate": true,
+            "bLengthChange": false,
+            "bFilter": false,
+            "bInfo": false,
+            "bAutoWidth": false,
             "visible": false,
             "targets": -1
-        } ]
-    } ); // inicializo el datatable    
+        
+    } ); // inicializo el datatable
     $('#t_reporte tbody').on( 'click', 'tr', function () {
         if ( $(this).hasClass('active') ) {
             $(this).removeClass('active');
@@ -25,18 +42,11 @@ HTMLreportep=function(datos){
     var html="", semaforo="", estdo='', estado_carta_inicio='';
     $('#t_reporte').dataTable().fnDestroy();
     $.each(datos,function(index,data){
-        estado=data.estado;
-        estado_carta_inicio=data.estado_carta_inicio;
-        if (estado=='Concluido') {
-            semaforo='#507C33';//'Resuelto';// 
-        } else if (estado =='Inconcluso' && estado_carta_inicio=='Incumplimiento') {
-            semaforo='#FF0000';//'Incumplimiento';// 
-        } else if (estado =='Trunco' && estado_carta_inicio=='culminado') {
-            semaforo='#FFC000';//'Existe retraso en el paso actual';// 
-        } else if (estado =='Inconcluso' && estado_carta_inicio=='culminado') {
-            semaforo='#92D050';//'No existe retraso en el paso actual';// 
-        }
-
+        //semaforo='#507C33';//'Resuelto';//
+        //semaforo='#FF0000';//'Incumplimiento';//
+        //semaforo='#FFC000';//'Existe retraso en el paso actual';//
+        //semaforo='#92D050';//'No existe retraso en el paso actual';//
+        
         html+="<tr>"+
             "<td>"+data.proceso+"</td>"+
             "<td>"+data.cantidad_pasos_proceso+"</td>"+
@@ -46,7 +56,7 @@ HTMLreportep=function(datos){
             "<td>"+data.dias_ultimo_paso+"</td>"+
             "<td>"+data.fecha_inicio+"</td>"+
             "<td>"+data.fecha_fin+"</td>"+
-            "<td style='background-color:"+semaforo+"'>"+"</td>"+
+            "<td style='background-color:#"+data.semaforo+"'>"+"</td>"+
             "<td>"+data.tarea+"</td>"+
             "<td>"+data.descripcion_tarea+"</td>"+
             "<td>"+data.area+"</td>"+

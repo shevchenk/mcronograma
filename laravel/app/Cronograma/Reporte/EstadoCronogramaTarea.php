@@ -18,13 +18,32 @@ class EstadoCronogramaTarea
     public static function getTotal($filtro=array())
     {
         $data=array();
-        $sql = "
-                SELECT * FROM (
+        $sql = " SELECT selec.* FROM (
+                SELECT tabla.*, 
+                IF(
+                    tabla.estado='Concluido',
+                    '507C33',
+                    IF(
+                        (tabla.estado ='Inconcluso' || tabla.estado ='Trunco') && tabla.estado_carta_inicio='Incumplimiento',
+                        'FF0000',
+                        IF (
+                            tabla.estado ='Trunco' && tabla.estado_carta_inicio='culminado',
+                            'FFC000',
+                            IF (
+                                tabla.estado ='Inconcluso' && tabla.estado_carta_inicio='culminado',
+                                '92D050',
+                                ''
+                            )
+                        )
+                    )
+                ) AS semaforo
+
+                FROM (
                    SELECT
                         f.id AS proceso_id, f.nombre AS proceso,
                         fdetalle.cantidad_pasos_proceso, fdetalle.dias_total,
                         rdetalle.cantidad_pasos_tramite, rdetalle.tramite,
-                        rdetalle.estado, rdetalle.ultimo_paso,
+                        rdetalle.estado, rdetalle.ultimo_paso, rdetalle.fecha,
                         IF( rdetalle.ultimo_paso<>'', 
                             (SELECT  dtiempo 
                              FROM rutas_detalle rd
@@ -62,7 +81,7 @@ class EstadoCronogramaTarea
                     INNER JOIN 
                     -- tramite 
                         (SELECT COUNT(rd.id) AS cantidad_pasos_tramite, rd.ruta_id,
-                            tr.id_union AS tramite , r.flujo_id ,
+                            tr.id_union AS tramite , r.flujo_id , r.fecha_inicio AS fecha,
                             IF(
                                 (SELECT COUNT(rd.id)
                                 FROM rutas_detalle rd
@@ -100,10 +119,31 @@ class EstadoCronogramaTarea
                     INNER JOIN personas p ON cd.`persona_id`=p.id
                     WHERE
                     f.estado=1 AND c.estado=1 AND cd.estado=1
-                 ) tabla"
+                 ) tabla
+                 ) selec
+                 WHERE 1 "
                  ;
+        if (isset($filtro['semaforo'])) {
+            $filtro[]=$filtro['semaforo'];
+            unset($filtro['semaforo']);
+            $sql.=" AND selec.semaforo=? ";
+        }
+        if (isset($filtro['tramite'])) {
+            $filtro[]=$filtro['tramite'];
+            unset($filtro['tramite']);
+            $sql.=" AND selec.tramite=? ";
+        }
+        if (isset($filtro['fecha'])) {
+            $fecha=explode(' - ', $filtro['fecha']);
+            $filtro[]=$fecha[0];
+            $filtro[]=$fecha[1];
+            unset($filtro['fecha']);
+            $sql.=" AND selec.fecha BETWEEN ? AND ? ";
+        }
         try {
-            $data = DB::select($sql);
+
+            $data = DB::select($sql,$filtro);
+
         } catch (Exception $e) {
             $data="error";
         }

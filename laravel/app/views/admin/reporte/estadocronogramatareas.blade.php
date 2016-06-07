@@ -46,10 +46,10 @@
                                     </label>
                                     <select class="form-control" name="slct_semaforo" id="slct_semaforo">
                                         <option value="">.::Seleccione::.</option>
-                                        <option value="resuelto">RESUELTO</option>
-                                        <option value="incumplimiento">INCUMPLIMIENTO</option>
-                                        <option value="retraso">SI EXISTE RETRASO</option>
-                                        <option value="sinretraso">NO EXISTE RETRASO</option>
+                                        <option value="507C33">RESUELTO</option>
+                                        <option value="FF0000">INCUMPLIMIENTO</option>
+                                        <option value="FFC000">SI EXISTE RETRASO</option>
+                                        <option value="92D050">NO EXISTE RETRASO</option>
                                     </select>
                                     
 
