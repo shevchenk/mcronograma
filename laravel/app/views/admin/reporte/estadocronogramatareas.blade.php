@@ -38,58 +38,71 @@
                     <!-- Inicia contenido -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Filtros</h3>
+                        
+                            <div class="form-group">
+                                <div class="col-sm-3">
+
+                                    <label class="control-label">Semaforo:
+                                    </label>
+                                    <select class="form-control" name="slct_semaforo" id="slct_semaforo">
+                                        <option value="">.::Seleccione::.</option>
+                                        <option value="resuelto">RESUELTO</option>
+                                        <option value="incumplimiento">INCUMPLIMIENTO</option>
+                                        <option value="retraso">SI EXISTE RETRASO</option>
+                                        <option value="sinretraso">NO EXISTE RETRASO</option>
+                                    </select>
+                                    
+
+                                </div>
+
+
+                                <div class="col-sm-3">
+                                    <label class="control-label">Tramite:
+                                    </label>
+                                    <input type="text" name="txt_tramite" id="txt_tramite" class="form-control">
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <label class="control-label">Fecha:
+                                    </label>
+                                    <input type="text" name="txt_fecha" id="txt_fecha" class="form-control">
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="control-label">
+                                    </label>
+                                    <input type="button" class="form-control btn btn-primary" id="mostrar" name="mostrar" value="Mostrar">
+                                </div>
+                            </div>
 
                         </div><!-- /.box-header -->
                         <div class="box-body table-responsive">
-                            <table cellspacing="0" id="t_reporte" class="table table-bordered table-striped">
+                            <table id="t_reporte" class="table table-striped table-bordered" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
-                                        <th style='background-color:#FFF2CC' colspan="3">Proceso</th>
-                                        <th style='background-color:#DEEBF7' colspan="6">Tramite</th>
-                                        <th style='background-color:#C4DFB3' colspan="7">Tarea y responsable</th>
+                                        <th style='background-color:#FFF2CC; TEXT-ALIGN: center; ' colspan="3">PROCESO</th>
+                                        <th style='background-color:#DEEBF7; TEXT-ALIGN: center; ' colspan="6">TRAMITE</th>
+                                        <th style='background-color:#C4DFB3; TEXT-ALIGN: center; ' colspan="6">TAREA Y RESPONSABLE</th>
                                     </tr>
                                     <tr>
-                                        <th style='background-color:#FFF2CC'>proceso</th>
-                                        <th style='background-color:#FFF2CC'>cantidad_pasos_proceso</th>
-                                        <th style='background-color:#FFF2CC'>dias_total</th>
-                                        <th style='background-color:#DEEBF7'>tramite</th>
-                                        <th style='background-color:#DEEBF7'>ultimo_paso</th>
-                                        <th style='background-color:#DEEBF7'>dias_ultimo_paso</th>
-                                        <th style='background-color:#DEEBF7'>fecha_inicio</th>
-                                        <th style='background-color:#DEEBF7'>fecha_fin</th>
-                                        <th style='background-color:#DEEBF7'>estado</th>
-                                        <th style='background-color:#C4DFB3'>estado_carta_inicio</th>
-                                        <th style='background-color:#C4DFB3'>tarea</th>
-                                        <th style='background-color:#C4DFB3'>descripcion_tarea</th>
-                                        <th style='background-color:#C4DFB3'>area</th>
-                                        <th style='background-color:#C4DFB3'>responsable</th>
-                                        <th style='background-color:#C4DFB3'>recursos</th>
+                                        <th style='background-color:#FFF2CC'>PROCESO</th>
+                                        <th style='background-color:#FFF2CC'>N° DE PASOS</th>
+                                        <th style='background-color:#FFF2CC'>DIAS TOTAL</th>
+                                        <th style='background-color:#DEEBF7'>TRAMITE</th>
+                                        <th style='background-color:#DEEBF7'>PASO ACTUAL</th>
+                                        <th style='background-color:#DEEBF7'>DIAS</th>
+                                        <th style='background-color:#DEEBF7'>F INICIO</th>
+                                        <th style='background-color:#DEEBF7'>F FINAL</th>
+                                        <th style='background-color:#DEEBF7'>SEMAFORO</th>
+                                        <th style='background-color:#C4DFB3'>TIPO TAREA</th>
+                                        <th style='background-color:#C4DFB3'>DESCRIPCION TAREA</th>
+                                        <th style='background-color:#C4DFB3'>AREA</th>
+                                        <th style='background-color:#C4DFB3'>RESPONSABLE</th>
+                                        <th style='background-color:#C4DFB3'>RECURSO</th>
                                         <th style='background-color:#C4DFB3'> [ ] </th>
                                     </tr>
                                 </thead>
                                 <tbody id="tb_reporte">
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>proceso</th>
-                                        <th>cantidad_pasos_proceso</th>
-                                        <th>dias_total</th>
-                                        <th>tramite</th>
-                                        <th>ultimo_paso</th>
-                                        <th>dias_ultimo_paso</th>
-                                        <th>fecha_inicio</th>
-                                        <th>fecha_fin</th>
-                                        <th>estado</th>
-                                        <th>estado_carta_inicio</th>
-                                        <th>tarea</th>
-                                        <th>descripcion_tarea</th>
-                                        <th>area</th>
-                                        <th>responsable</th>
-                                        <th>recursos</th>
-                                        <th> [ ] </th>
-                                    </tr>
-                                </tfoot>
                             </table>
                         </div><!-- /.box-body -->
                     </div><!-- /.box -->
