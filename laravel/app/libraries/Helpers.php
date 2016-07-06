@@ -1,7 +1,7 @@
 <?php
 //funciones
-require_once app_path().'\libraries\htmltodocx_converter\h2d_htmlconverter.php';
-require_once app_path().'\libraries\example_files\styles.inc';
+require_once app_path().'/libraries/htmltodocx_converter/h2d_htmlconverter.php';
+require_once app_path().'/libraries/example_files/styles.inc';
 
 class Helpers
 {
