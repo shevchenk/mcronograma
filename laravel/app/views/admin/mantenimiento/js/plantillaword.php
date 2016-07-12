@@ -107,46 +107,21 @@ HTMLCargar=function(datos){
 
 HTMLtinymce=function(){
 
-  tinyMCE.init({
-    mode : 'textareas',
-    theme : 'ribbon',
-    //content_css : 'css/editor.css',
-    height: 600,
-    plugins : 'bestandsbeheer,tabfocus,advimagescale,loremipsum,image_tools,embed,tableextras,style,table,inlinepopups,searchreplace,contextmenu,paste,wordcount,advlist,autosave',
-    inlinepopups_skin : 'ribbon_popup',
-    theme_ribbon_tab1 : {
-      title : "Start",
-      items : [
-              ["paste"],
-              ["justifyleft,justifycenter,justifyright,justifyfull",
-               "bullist,numlist",
-               "|",
-               "bold,italic,underline",
-               "outdent,indent"],
-              ["paragraph", "heading1", "heading2", "heading3"],
-              ["search", "|", "replace", "|", "removeformat"]]
-    },
-    theme_ribbon_tab2 : {
-      title : "Insert",
-      items : [["tabledraw"],
-              ["image", "bestandsbeheer_file", "bestandsbeheer_video", "bestandsbeheer_mp3"],
-              ["embed"],
-              ["link", "|", "unlink", "|", "anchor"],
-              ["loremipsum", "|", "charmap", "|", "hr"]]
-    },
-    theme_ribbon_tab3 : {
-      title : "Source",
-      source : true
-    },
-    theme_ribbon_tab4 : {
-      title : "Image",
-      bind :  "img",
-      items : [["image_float_left", "image_float_right", "image_float_none"],
-              ["image_alt"],
-              ["image_width_plus", "|", "image_width_min", "|", "image_width_original"],
-              ["image_edit", "|", "image_remove"]]
-    }
-
+  tinymce.init({
+    selector:'textarea',
+    language : "es",
+    height: 400,
+    plugins: [
+      'advlist autolink lists link image charmap print preview anchor',
+      'searchreplace visualblocks code fullscreen',
+      'insertdatetime media table contextmenu paste code'
+    ],
+    toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+    content_css: [
+      '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
+      '//www.tinymce.com/css/codepen.min.css'
+    ]
   });
+
 };
 </script>
