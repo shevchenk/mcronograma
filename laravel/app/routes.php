@@ -1,5 +1,64 @@
 <?php
 
+App::bind('Chat\Repositories\Conversation\ConversationRepository', 'Chat\Repositories\Conversation\DbConversationRepository');
+App::bind('Chat\Repositories\User\UserRepository', 'Chat\Repositories\User\DbUserRepository');
+
+/*
+Route::get('/', function() {
+    return Redirect::route('auth.postLogin');
+});*/
+
+Route::get('/loginchat', array(
+    'as'   => 'auth.getLogin',
+    'uses' => 'AuthController@getLogin'
+));
+
+Route::post('/loginchat', array(
+    'as'   => 'auth.postLogin',
+    'uses' => 'AuthController@postLogin'
+));
+
+Route::get('/logout', array(
+    'as'   => 'auth.logout',
+    'uses' => 'AuthController@logout'
+));
+
+Route::get('/chat/', array(
+    'before' => 'authChat',
+    'as'     => 'chat.index',
+    'uses'   => 'ChatController@index'
+));
+
+Route::get('/messages/', array(
+    'before' => 'authChat',
+    'as'     => 'messages.index',
+    'uses'   => 'MessageController@index'
+));
+
+Route::post('/messages/', array(
+    'before' => 'authChat',
+    'as'     => 'messages.store',
+    'uses'   => 'MessageController@store'
+));
+
+Route::get('users/{user_id}/conversations', array(
+    'before' => 'authChat',
+    'as'     => 'conversations_users.index',
+    'uses'   => 'ConversationUserController@index'
+));
+
+Route::post('/conversations/', array(
+    'before' => 'authChat',
+    'as'     => 'conversations.store',
+    'uses'   => 'ConversationController@store'
+));
+
+Route::get('/conversations/', array(
+    'before' => 'authChat',
+    'as'     => 'conversations.index',
+    'uses'   => 'ConversationController@index'
+));
+
 use Cronograma\Test;
 Route::get(
     '/josbel', function () {

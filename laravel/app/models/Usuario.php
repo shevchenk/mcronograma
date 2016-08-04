@@ -23,7 +23,9 @@ class Usuario extends Eloquent implements UserInterface, RemindableInterface
      * @var array
      */
     public $hidden = array('password', 'remember_token');
-
+    public function conversations() {
+        return $this->belongsToMany('Conversation', 'conversations_users', 'user_id', 'conversation_id');
+     }
     public static function ListarUsuarios()
     {
         $areaId=implode("','",Input::get('area_id'));
