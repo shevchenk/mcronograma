@@ -3,7 +3,7 @@
 
 @section('includes')
     @parent
-    {{ HTML::script('lib/tinymce/js/tinymce/tinymce.min.js') }}
+    {{ HTML::script('lib/ckeditor/ckeditor.js') }}
 
     @include( 'admin.mantenimiento.js.plantillaword_ajax' )
     @include( 'admin.mantenimiento.js.plantillaword' )

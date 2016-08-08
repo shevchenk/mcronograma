@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Cronograma\PlantillasWord;
 
@@ -69,7 +69,7 @@ class PlantillaController extends \BaseController {
                 $plantilla->usuario_created_at = Auth::user()->id;
                 $plantilla->save();
                 return Response::json(array('rst'=>1, 'msj'=>'Registro actualizado correctamente'));
-            
+
             } else{
                 return Response::json(array('rst'=>2, 'msj'=>'Hubo problemas'));
             }

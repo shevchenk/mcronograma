@@ -1,5 +1,5 @@
 <!-- /.modal -->
-<div class="modal fade" id="plantillaModal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="plantillaModal" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header logo">
@@ -35,7 +35,7 @@
           <div class="row">
             <div class="col-xs-12">
               <div class="form-group">
-                  <textarea id="word" name="word" class="form-control" rows="6"></textarea>
+                  <textarea id="plantillaWord" name="word" class="form-control" rows="6"></textarea>
               </div>
             </div>
           </div>

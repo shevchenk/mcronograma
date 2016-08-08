@@ -6,7 +6,7 @@ $(document).ready(function() {
         var button = $(event.relatedTarget);
         var titulo = button.data('titulo');
         plantilla_id = button.data('id');
-        var Plantilla =PlantillaObj[plantilla_id];
+        var Plantilla = PlantillaObj[plantilla_id];
         var modal = $(this);
         modal.find('.modal-title').text(titulo+' Plantilla');
         $('#form_plantilla [data-toggle="tooltip"]').css("display","none");
@@ -21,7 +21,7 @@ $(document).ready(function() {
             $('#form_plantilla #txt_nombre').val( Plantilla.nombre );
             $('#form_plantilla #slct_estado').val( Plantilla.estado );
             Plantilla.cuerpo = ( Plantilla.cuerpo == null ) ? '' : Plantilla.cuerpo;
-            tinyMCE.get('word').setContent( Plantilla.cuerpo );
+            CKEDITOR.instances.plantillaWord.setData( Plantilla.cuerpo );
             $("#form_plantilla").append("<input type='hidden' value='"+Plantilla.id+"' name='id'>");
 
         }
@@ -38,7 +38,7 @@ $(document).ready(function() {
     $('#plantillaModal').on('hide.bs.modal', function (event) {
         var modal = $(this);
         modal.find('.modal-body input').val('');
-        tinyMCE.get('word').setContent( "" );
+        CKEDITOR.instances.plantillaWord.setData( "" );
         $('#form_plantilla #slct_estado').val( 1 );
     });
 });
@@ -107,21 +107,7 @@ HTMLCargar=function(datos){
 
 HTMLtinymce=function(){
 
-  tinymce.init({
-    selector:'textarea',
-    language : "es",
-    height: 400,
-    plugins: [
-      'advlist autolink lists link image charmap print preview anchor',
-      'searchreplace visualblocks code fullscreen',
-      'insertdatetime media table contextmenu paste code'
-    ],
-    toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-    content_css: [
-      '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
-      '//www.tinymce.com/css/codepen.min.css'
-    ]
-  });
+    CKEDITOR.replace( 'plantillaWord');
 
 };
 </script>
