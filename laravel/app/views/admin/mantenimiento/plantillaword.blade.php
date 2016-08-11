@@ -4,7 +4,7 @@
 @section('includes')
     @parent
     {{ HTML::script('lib/ckeditor/ckeditor.js') }}
-
+    {{ HTML::style('css/admin/plantilla.css') }}
     @include( 'admin.mantenimiento.js.plantillaword_ajax' )
     @include( 'admin.mantenimiento.js.plantillaword' )
 @stop

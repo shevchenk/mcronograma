@@ -123,6 +123,41 @@ var Plantillas={
                 alertBootstrap('danger', 'Ocurrio una interrupción en el proceso,Favor de intentar nuevamente', 6);
             }
         });
-    }
+    },
+    Previsualizar:function(){
+        $("#form_plantilla input[name='word']").remove();
+        $("#form_plantilla").append("<input type='hidden' value='"+CKEDITOR.instances.plantillaWord.getData()+"' name='word'>");
+        var datos=$("#form_plantilla").serialize().split("txt_").join("").split("slct_").join("");
+
+        // $.ajax({
+        //     url         : "plantilla/previsualizar",
+        //     type        : 'POST',
+        //     cache       : false,
+        //     dataType    : 'json',
+        //     data        : datos,
+        //     beforeSend : function() {
+        //         $("body").append('<div class="overlay"></div><div class="loading-img"></div>');
+        //     },
+        //     success : function(obj) {
+        //         $(".overlay,.loading-img").remove();
+        //         if(obj.rst==1){
+        //             $('#t_plantilla').dataTable().fnDestroy();
+        //             Plantillas.Cargar(activarTabla);
+        //             alertBootstrap('success', obj.msj, 6);
+        //             $('#plantillaModal .modal-footer [data-dismiss="modal"]').click();
+        //         }
+        //         else{
+        //             $.each(obj.msj,function(index,datos){
+        //                 $("#error_"+index).attr("data-original-title",datos);
+        //                 $('#error_'+index).css('display','');
+        //             });
+        //         }
+        //     },
+        //     error: function(){
+        //         $(".overlay,.loading-img").remove();
+        //         alertBootstrap('danger', 'Ocurrio una interrupción en el proceso,Favor de intentar nuevamente', 6);
+        //     }
+        // });
+    },
 };
 </script>

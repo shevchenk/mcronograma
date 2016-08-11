@@ -40,6 +40,7 @@ class PlantillaController extends \BaseController {
                 $plantilla->path = '';
                 $plantilla->cuerpo = $html;
                 $plantilla->estado = Input::get('estado');
+                $plantilla->cabecera = Input::get('cabecera');
                 $plantilla->usuario_updated_at = Auth::user()->id;
                 $plantilla->save();
                 return Response::json(array('rst'=>1, 'msj'=>'Registro actualizado correctamente'));
@@ -66,6 +67,7 @@ class PlantillaController extends \BaseController {
                 $plantilla->path = $newfile;
                 $plantilla->cuerpo = $html;
                 $plantilla->estado = Input::get('estado');
+                $plantilla->cabecera = Input::get('cabecera');
                 $plantilla->usuario_created_at = Auth::user()->id;
                 $plantilla->save();
                 return Response::json(array('rst'=>1, 'msj'=>'Registro actualizado correctamente'));
@@ -95,4 +97,43 @@ class PlantillaController extends \BaseController {
             );
         }
     }
+
+    /**
+     * POST /plantilla/previsualizar
+     *
+     * @return Response
+     */
+    public function getPrevisualizar($id)
+    {
+
+        $plantilla = Plantilla::find( $id );
+
+        if ($plantilla) {
+
+            $params = [
+                'nombre' => $plantilla->nombre,
+                'conCabecera' => $plantilla->cabecera,
+                'contenido' => $plantilla->cuerpo
+            ];
+            $params = $params + $this->dataEjemploPlantilla();
+
+            $view = \View::make('admin.mantenimiento.templates.plantilla1', $params);
+            $html = $view->render();
+
+            return \PDF::load($html, 'A4', 'portrait')->show();
+        }
+
+    }
+
+    function dataEjemploPlantilla() {
+        return [
+            'nombreDocumento' => '(EJEMPLO) MEMORANDUM CIRCULAR N 016-2016-SG/MDC',
+            'remitente' => 'Nombre de Encargado <br>Nombre de Gerencia y/o Subgerencia',
+            'destinatario' => 'Nombre a quien va dirigido <br>Nombre de Gerencia y/o Subgerencia',
+            'asunto' => 'Titulo, <i>Ejemplo:</i> Invitación a la Inaguración del Palacio Municipal',
+            'fecha' => 'Fecha, <i>Ejemplo:</i> Lima, 01 de diciembre del 2016',
+        ];
+    }
+
 }
+
